@@ -142,7 +142,6 @@ function Layout() {
         <Route path="/login" element={<Login />} />
 
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/checkout" element={<Checkout />} />
         <Route path="/register" element={<Register />} />
 
         <Route
@@ -165,14 +164,6 @@ function Layout() {
 
         <Route path="/" element={<Home />} />
 
-        <Route
-          path="/admin/orders/:id"
-          element={
-            <AdminRoute>
-              <AdminOrderDetails />
-            </AdminRoute>
-          }
-        />
         <Route
           path="/profile"
           element={
