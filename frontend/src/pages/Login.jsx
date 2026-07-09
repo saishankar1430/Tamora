@@ -41,18 +41,23 @@ function Login() {
   };
 
   const handleForgotPassword = async () => {
-    if (!email) {
-      toast.error("Enter your email first.");
-      return;
-    }
+  if (!formData.email.trim()) {
+    toast.error("Please enter your email first.");
+    return;
+  }
 
-    try {
-      await resetPassword(email);
-      toast.success("Password reset email sent!");
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
+  try {
+    await resetPassword(formData.email);
+
+    toast.success(
+      "Password reset link sent! Check your email."
+    );
+  } catch (error) {
+    console.error(error);
+
+    toast.error(error.message);
+  }
+};
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
