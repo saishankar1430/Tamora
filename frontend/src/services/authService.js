@@ -10,6 +10,8 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
+import { sendPasswordResetEmail } from "firebase/auth";
+
 import { auth, db } from "../firebase/firebase";
 
 export async function registerUser(name, email, password) {
@@ -46,4 +48,8 @@ export async function loginUser(email, password) {
 
 export async function logoutUser() {
   await signOut(auth);
+}
+
+export async function resetPassword(email) {
+  return sendPasswordResetEmail(auth, email);
 }

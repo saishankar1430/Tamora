@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import { loginUser } from "../services/authService";
-
+import { resetPassword } from "../services/authService";
 function Login() {
   const navigate = useNavigate();
 
@@ -27,10 +27,7 @@ function Login() {
     try {
       setLoading(true);
 
-      await loginUser(
-        formData.email,
-        formData.password
-      );
+      await loginUser(formData.email, formData.password);
 
       toast.success("Welcome back!");
 
@@ -43,16 +40,26 @@ function Login() {
     }
   };
 
+  const handleForgotPassword = async () => {
+    if (!email) {
+      toast.error("Enter your email first.");
+      return;
+    }
+
+    try {
+      await resetPassword(email);
+      toast.success("Password reset email sent!");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
-
-        <h1 className="text-3xl font-bold text-center mb-6">
-          Login
-        </h1>
+        <h1 className="text-3xl font-bold text-center mb-6">Login</h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           <input
             type="email"
             name="email"
@@ -80,19 +87,21 @@ function Login() {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
-
+          <button
+            type="button"
+            onClick={handleForgotPassword}
+            className="text-sm text-blue-600 hover:underline mt-2"
+          >
+            Forgot Password?
+          </button>
         </form>
 
         <p className="text-center mt-6">
           Don't have an account?{" "}
-          <Link
-            to="/register"
-            className="text-blue-600 font-semibold"
-          >
+          <Link to="/register" className="text-blue-600 font-semibold">
             Register
           </Link>
         </p>
-
       </div>
     </section>
   );
